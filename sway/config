@@ -1,0 +1,119 @@
+# SUPER
+set $mod Mod4
+
+# APARÊNCIA (Ricing C:)
+gaps inner 8
+gaps outer 8
+default_border pixel 1
+default_floating_border pixel 29
+exec_always swaybg -m fill -i /home/rodlak/Wallpapers/flux.png
+corner_radius 10
+shadows enable
+blur enable
+blur_passes 2
+blur_radius 2
+
+#pallete:
+#--strawberry-red: #fa1f38ff;
+#--ruby-red: #a71731ff;
+#--black: #020104ff;
+#--regal-navy: #0a346fff;
+#--bright-teal-blue: #0673a8ff;
+#--dry-sage: #bfc887ff;
+#--soft-peach: #550C1B;
+
+# class                 border      bg      text    indicator   child_border
+client.focused          #550c1b   #020104   #f1d293   #550c1b   #550c1b
+client.focused_inactive #fa1f38   #020104   #f1d293   #fa1f38   #fa1f38
+client.unfocused        #020104   #020104   #f1d293   #020104   #020104
+client.urgent           #d11b35   #020104   #f1d293   #d11b35   #d11b35
+client.placeholder      #020104   #020104   #f1d293   #020104   #020104
+
+#mouse inutil (pq que linux tem uma config tao ruim pra mouse?)
+
+#animaçoes:
+#(entendeu? sway nao tem animacao)
+
+#larp
+bindsym $mod+Shift+r reload
+bindsym $mod+Shift+e exec swaynag -t warning -m 'Sair do Sway?' -B 'Sim' 'swaymsg exit'
+bindsym $mod+Shift+q kill
+bindsym $mod+Return exec kitty
+bindsym $mod+d exec rofi -show drun
+bindsym $mod+g exec thunar 
+bindsym $mod+Shift+s exec grim -g "$(slurp)" - | tee >(wl-copy) | swappy -f -
+bindsym Print exec grim -g "$(slurp)" - | tee >(wl-copy) | swappy -f -
+bindsym $mod+v exec cliphist list | rofi -dmenu -theme ~/.config/rofi/config.rasi -p "Copy & Paste" | cliphist decode | wl-copy
+bindsym $mod+f exec firefox
+floating_modifier $mod normal
+bindsym $mod+Shift+space floating toggle
+
+#ignorar:
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+#inferno:
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+# MOVIMENTAÇÃO SETAS nichosas
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# WAYBAR E WOFI
+bar { 
+    swaybar_command waybar 
+    }
+
+
+#teclado merda nao le o cedilha
+ input "type:keyboard" {
+    xkb_layout "us"
+    xkb_variant "intl"
+} 
+
+
+#  AGENTE DE AUTH
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# sla cara acho que isso é uma clipboard né
+exec --no-startup-id wl-paste --type text --watch cliphist store
+exec --no-startup-id wl-paste --type image --watch cliphist store
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+
+exec systemctl --user import-environment GTK_IM_MODULE QT_IM_MODULE XMODIFIERS
+exec export GTK_IM_MODULE=xim
+exec export QT_IM_MODULE=xim
+exec export XMODIFIERS=@im=none
+exec systemctl --user import-environment __NV_PRIME_RENDER_OFFLOAD __GLX_VENDOR_LIBRARY_NAME
+exec_always {
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'
+}
+set $QT_STYLE_OVERRIDE Fusion
+exec dbus-update-activation-environment --systemd QT_STYLE_OVERRIDE=Fusion
+
+output eDP-1 mode 1920x1080@144.149Hz pos 0 0
+output HDMI-A-1 mode 1920x1080@180.003Hz pos 1920 0
