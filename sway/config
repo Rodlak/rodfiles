@@ -6,7 +6,7 @@ gaps inner 8
 gaps outer 8
 default_border pixel 1
 default_floating_border pixel 29
-exec_always swaybg -m fill -i /home/rodlak/Wallpapers/flux.png
+exec_always swaybg -m fill -i $HOME/Wallpapers/flux.png
 corner_radius 10
 shadows enable
 blur enable
